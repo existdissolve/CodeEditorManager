@@ -1,0 +1,6 @@
+.ace-toolbar {margin-bottom: 0px;padding-bottom: 0px;}
+.ace-toolbar select {margin-right:10px;}
+.ace-toolbar .control-label {display: inline-block !important;margin-right:10px;margin-top:-4px;}
+.ace-area {position:relative;top:0;right:0;bottom:0;left:0;}
+.ace-area.full {height:510px;}
+.ace-area.excerpt{height:250px;}
