@@ -62,7 +62,7 @@ component {
         var populatedThemes = [];
         var customThemeList = getCodeEditorSetting( "themes", "ace" );
         for( var theme in settings.ace.themes ) {
-            if( arrayFindNoCase( customThemeList, replaceNoCase( theme.path, "ace/theme/", "", "all" ) ) ) {
+            if( arrayFindNoCase( customThemeList, theme.theme ) ) {
                 arrayAppend( populatedThemes, theme );
             }
         }
@@ -71,23 +71,25 @@ component {
 
     /**
      * Returns a simplified list of modes
+     * @editor {String} the name of the editor for which the themes are being retrieved
      * return Array
      */
-    public Array function getSimpleModeList() {
+    public Array function getSimpleModeList( required String editor ) {
         var modes = [];
-        for( var mode in settings.ace.modes ) {
+        for( var mode in settings[ editor ].modes ) {
             arrayAppend( modes, mode.mode );
         }
         return modes;
     }
     /**
      * Returns a simplified list of themes
+     * @editor {String} the name of the editor for which the themes are being retrieved
      * return Array
      */
-    public Array function getSimpleThemeList() {
+    public Array function getSimpleThemeList( required String editor ) {
         var themes = [];
-        for( var theme in settings.ace.themes ) {
-            arrayAppend( themes, replaceNoCase( theme.path, "ace/theme/", "", "all" ) );
+        for( var theme in settings[ editor ].themes ) {
+            arrayAppend( themes, theme.theme );
         }
         return themes;
     }

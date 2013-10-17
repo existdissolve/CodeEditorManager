@@ -4,6 +4,7 @@ component displayName="Home" {
     property name="CodeEditorService" inject="CodeEditorService@CodeEditor";
     property name="EditorService" inject="EditorService@cb";
     property name="AceEditor" inject="AceEditor@CodeEditor";
+    property name="CodeMirrorEditor" inject="CodeMirrorEditor@CodeEditor";
 
     function index( required any event, required struct rc, required struct prc){
         // get custom settings
@@ -17,6 +18,14 @@ component displayName="Home" {
         prc.Ace.defaultMode = CodeEditorService.getCodeEditorSetting( "defaultMode", "ace" );
         prc.Ace.defaultTheme = CodeEditorService.getCodeEditorSetting( "defaultTheme", "ace" );
         prc.Ace.active = CodeEditorService.getCodeEditorSetting( "active", "ace" );
+
+        prc.CodeMirror.modes = settings.CodeMirror.modes;
+        prc.CodeMirror.themes = settings.CodeMirror.themes;
+        prc.CodeMirror.allowedModes = CodeEditorService.getCodeEditorSetting( "modes", "codemirror" );
+        prc.CodeMirror.allowedThemes = CodeEditorService.getCodeEditorSetting( "themes", "codemirror" );
+        prc.CodeMirror.defaultMode = CodeEditorService.getCodeEditorSetting( "defaultMode", "codemirror" );
+        prc.CodeMirror.defaultTheme = CodeEditorService.getCodeEditorSetting( "defaultTheme", "codemirror" );
+        prc.CodeMirror.active = CodeEditorService.getCodeEditorSetting( "active", "codemirror" );
         prc.tabModules_Ace = true;
         prc.xehSaveSettings = cb.buildModuleLink( "CodeEditor", "home.saveSettings" );
         event.setView( "home/index" );
@@ -28,10 +37,20 @@ component displayName="Home" {
         var aceArgs = {
             "defaultMode" = settings.Ace.defaultMode,
             "defaultTheme" = settings.Ace.defaultTheme,
-            "modes" = CodeEditorService.getSimpleModeList(),
-            "themes" = CodeEditorService.getSimpleThemeList(),
+            "modes" = CodeEditorService.getSimpleModeList( "ace" ),
+            "themes" = CodeEditorService.getSimpleThemeList( "ace" ),
             "active" = false
         };
+        var codemirrorArgs = {
+            "defaultMode" = settings.CodeMirror.defaultMode,
+            "defaultTheme" = settings.CodeMirror.defaultTheme,
+            "modes" = CodeEditorService.getSimpleModeList( "codemirror" ),
+            "themes" = CodeEditorService.getSimpleThemeList( "codemirror" ),
+            "active" = false
+        };
+        /**
+         * Ace Editor
+         */
         // handle modes
         if( structKeyExists( rc, "AceModes" ) ) {
             aceArgs[ "modes" ] = listToArray( rc.AceModes );
@@ -54,10 +73,39 @@ component displayName="Home" {
         else {
             EditorService.unregisterEditor( "ace" );
         }
+
+        /**
+         * CodeMirror Editor
+         */
+         // handle modes
+        if( structKeyExists( rc, "CodeMirrorModes" ) ) {
+            codemirrorArgs[ "modes" ] = listToArray( rc.CodeMirrorModes );
+        }
+        // handle themes
+        if( structKeyExists( rc, "CodeMirrorThemes" ) ) {
+            codemirrorArgs[ "themes" ] = listToArray( rc.CodeMirrorThemes );
+        }
+        // handle defaults
+        if( structKeyExists( rc, "CodeMirrorDefaultMode" ) ) {
+            codemirrorArgs[ "defaultMode" ] = rc.CodeMirrorDefaultMode;
+        }
+        if( structKeyExists( rc, "CodeMirrorDefaultTheme" ) ) {
+            codemirrorArgs[ "defaultTheme" ] = rc.CodeMirrorDefaultTheme;
+        }
+        if( structKeyExists( rc, "CodeMirrorActive" ) ) {
+            codemirrorArgs[ "active" ] = true;
+            EditorService.registerEditor( CodeMirrorEditor );
+        }
+        else {
+            EditorService.unregisterEditor( "codemirror" );
+        }
+
+
+
         // save settings
         var args = { name="codeeditor" };
         var setting = settingService.findWhere( criteria=args );
-        args.value = serializeJSON( { "ace"= aceArgs } );
+        args.value = serializeJSON( { "ace"= aceArgs, "codemirror" = codemirrorArgs } );
         if( isNull( setting ) ) {
             var newsetting = settingService.new( properties=args );
             settingService.save( newsetting );

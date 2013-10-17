@@ -72,7 +72,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
             modeCombo &= "<select name='Mode'>";
             var modes = CodeEditorService.getCustomPopulatedModes();
             for( var mode in modes ) {
-                if( CodeEditorService.getCodeEditorSetting( "defaultMode", "ace" ) == mode.mode ) ) {
+                if( CodeEditorService.getCodeEditorSetting( "defaultMode", "ace" ) == mode.mode ) {
                     modeCombo &= "<option selected=true value='ace/mode/#mode.mode#'>#mode.name#</option>";
                     defaultMode = mode.mode;
                 }
