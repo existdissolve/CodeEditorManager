@@ -77,7 +77,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
             { name="Nginx", mime="text/x-nginx-conf", mode="nginx", type="nginx" },
             { name="NTriples", mime="text/n-triples", mode="ntriples", type="ntriples" },
             { name="OCaml", mime="text/x-ocaml", mode="ocaml", type="ocaml" },
-            { name="Octave", mime="text/x-octave", mode="octave", type="octae" },
+            { name="Octave", mime="text/x-octave", mode="octave", type="octave" },
             { name="Pascal", mime="text/x-pascal", mode="pascal", type="pascal" },
             { name="Perl", mime="text/x-perl", mode="perl", type="perl" },
             { name="PHP", mime="text/x-php", mode="php", type="php" },
@@ -196,6 +196,11 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
             var modeCombo = "<label class='control-label' for=Mode>Language:</label>";
             modeCombo &= "<select name='Mode'>";
             var modes = this.getCustomModes();
+            html.addAsset("#moduleRoot#/includes/codemirror/js/mode/javascript/javascript.js");
+            html.addAsset("#moduleRoot#/includes/codemirror/js/mode/xml/xml.js");
+            html.addAsset("#moduleRoot#/includes/codemirror/js/mode/css/css.js");
+            html.addAsset("#moduleRoot#/includes/codemirror/js/mode/htmlmixed/htmlmixed.js");
+            html.addAsset("#moduleRoot#/includes/codemirror/js/mode/ruby/ruby.js");
             for( var mode in modes ) {
                 if( this.getSetting( "defaultMode" ) == mode.mode ) {
                     modeCombo &= "<option selected=true value='#mode.mime#'>#mode.name#</option>";
