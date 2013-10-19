@@ -1,18 +1,20 @@
 component accessors="true" cache=false {
-
-    /**
+   /**
     * Constructor
     */
-    public CodeEditorHelper function init( required Any editor ) {
+    public CodeEditorMixin function init( required Any editor ) {
         variables.editor = arguments.editor;
         // mixin to custom editor
-        for( var fn in getMetaData( this ).functions ) {
-            if( fn.name != "init" ) {
-                variables.editor[ fn.name ] = variables[ fn.name ];
+        var fns = getMetaData( this ).functions;
+        for( var i=1; i<=arrayLen( fns ); i++ ) {
+            var name = fns[ i ].name;
+            if( name != "init" ) {
+                variables.editor[ name ] = variables[ name ];
             }            
         }
         return this;
     }
+
 
     /**
      * Gets setting, either from custom setting json or from module root
@@ -21,7 +23,7 @@ component accessors="true" cache=false {
      */
     public Any function getSetting( required String name ) {
         // grab custom settings
-        var args = { name="codeeditor-#getName()#" };
+        var args = { name="codeeditormanager-#getName()#" };
         var customSettings = SettingService.findWhere( criteria=args );
         var hasCustomSetting=false;
         var settingValue = "";

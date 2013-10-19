@@ -1,5 +1,5 @@
 component displayName="Home" {
-    property name="settings" inject="coldbox:moduleSettings:CodeEditor";
+    property name="settings" inject="coldbox:moduleSettings:CodeEditorManager";
     property name="settingService" inject="settingService@cb";
     property name="cb" inject="cbHelper@cb";
     property name="EditorService" inject="EditorService@cb";
@@ -21,7 +21,7 @@ component displayName="Home" {
             };
         }
         prc.tabModules_CodeEditor = true;
-        prc.xehSaveSettings = cb.buildModuleLink( "CodeEditor", "home.saveSettings" );
+        prc.xehSaveSettings = cb.buildModuleLink( "CodeEditorManager", "home.saveSettings" );
         event.setView( "home/index" );
     }
 
@@ -33,8 +33,8 @@ component displayName="Home" {
             var args = {
                 "defaultMode" = editor.getSetting( "defaultMode" ),
                 "defaultTheme" = editor.getSetting( "defaultTheme" ),
-                "modes" = editor.getSimpleModeList(),
-                "themes" = editor.getSimpleThemeList(),
+                "modes" = [],
+                "themes" = [],
                 "active" = false
             };
             if( structKeyExists( rc, "#name#Modes" ) ) {
@@ -59,7 +59,7 @@ component displayName="Home" {
                 EditorService.unregisterEditor( name );
             }
             // save settings
-            var saveArgs = { name="codeeditor-#name#" };
+            var saveArgs = { name="codeeditormanager-#name#" };
             var setting = settingService.findWhere( criteria=saveArgs );
             saveArgs.value = serializeJSON( args );
             if( isNull( setting ) ) {
@@ -73,7 +73,7 @@ component displayName="Home" {
         }
         // Messagebox
         getPlugin("MessageBox").info("Settings Saved & Updated!");
-        cb.setNextModuleEvent( "CodeEditor", "home.index" );
+        cb.setNextModuleEvent( "CodeEditorManager", "home.index" );
     }
 
     /**

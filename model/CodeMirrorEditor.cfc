@@ -159,10 +159,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
         // register dependencies
         variables.coldbox   = arguments.coldbox;
         requestService      = arguments.coldbox.getRequestService();
-        // get helper
-        helper = coldbox.getWireBox().getInstance( name="CodeEditorHelper", initArguments={
-            "editor" = this,
-            "settings" = variables.settings
+        // mixin helper
+        helper = coldbox.getWireBox().getInstance( name="CodeEditorMixin", initArguments={
+            "editor" = this
         });
         // Store admin entry point and base URL settings
         ADMIN_ENTRYPOINT = arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
@@ -188,7 +187,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
     * Startup the editor(s) on a page
     */
     function startup(){
-        var moduleRoot = cb.getModuleSettings( "CodeEditor" ).mapping;
+        var moduleRoot = cb.getModuleSettings( "CodeEditorManager" ).mapping;
         var js = "";
         var defaultMode = "";
         var defaultTheme = "";
@@ -297,7 +296,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
     function loadAssets(){
         var js = "";
         var event = requestService.getContext();
-        var moduleRoot = cb.getModuleSettings( "CodeEditor" ).mapping;
+        var moduleRoot = cb.getModuleSettings( "CodeEditorManager" ).mapping;
         // only include if codemirror is active
         if( this.getSetting( "active" ) ) {
             // Loaad JS assets

@@ -179,10 +179,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
         // register dependencies
         variables.coldbox   = arguments.coldbox;
         requestService      = arguments.coldbox.getRequestService();
-        // get helper
-        helper = coldbox.getWireBox().getInstance( name="CodeEditorHelper", initArguments={
-            "editor" = this,
-            "settings" = variables.settings
+        // mixin helper
+        helper = coldbox.getWireBox().getInstance( name="CodeEditorMixin", initArguments={
+            "editor" = this
         });
         // Store admin entry point and base URL settings
         ADMIN_ENTRYPOINT = arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
@@ -288,6 +287,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
                         Eeditor.setValue( val );
                         Eeditor.setTheme( '#defaultTheme#' );
                         Eeditor.getSession().setMode( '#defaultMode#' );
+                        Eeditor.setShowPrintMargin( false );
                         // add change event so we can still use the textarea value
                         Eeditor.getSession().on('change', function(e) {
                             $excerpt.val( Eeditor.getSession().getValue() );
@@ -318,7 +318,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
     public function loadAssets(){
         var js = "";
         var event = requestService.getContext();
-        var moduleRoot = cb.getModuleSettings( "CodeEditor" ).mapping;
+        var moduleRoot = cb.getModuleSettings( "CodeEditorManager" ).mapping;
         // only include if ace is active
         if( this.getSetting( "active" ) ) {
             // Loaad JS assets

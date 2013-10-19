@@ -76,7 +76,7 @@ component hint="Module Configuration for Code Editor Manager" {
     // If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
     this.layoutParentLookup = true;
     // Module Entry Point
-    this.entryPoint         = "CodeEditor";
+    this.entryPoint         = "CodeEditorManager";
 
     function configure(){
         // parent settings
@@ -135,9 +135,9 @@ component hint="Module Configuration for Code Editor Manager" {
         // Add Menu Contribution
         menuService.addSubMenu( 
             topMenu=menuService.MODULES, 
-            name="CodeEditor", 
+            name="CodeEditorManager", 
             label="Code Editor Manager", 
-            href="#menuService.buildModuleLink('CodeEditor','home')#" 
+            href="#menuService.buildModuleLink('CodeEditorManager','home')#" 
         );
     }
     /**
@@ -158,7 +158,7 @@ component hint="Module Configuration for Code Editor Manager" {
         // Let's remove ourselves to the main menu in the Modules section
         var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
         // Remove Menu Contribution
-        menuService.removeSubMenu( topMenu=menuService.MODULES, name="CodeEditor" );
+        menuService.removeSubMenu( topMenu=menuService.MODULES, name="CodeEditorManager" );
     }
     /**
      * Fired when the module is deactivated by ContentBox
@@ -166,7 +166,7 @@ component hint="Module Configuration for Code Editor Manager" {
     function onDeactivate(){
         var SettingService = controller.getWireBox().getInstance( "SettingService@cb" );
         for( name in settings.configuredEditors ) {
-            var args = {name="codeeditor-#name#"};
+            var args = {name="codeeditormanager-#name#"};
             var setting = SettingService.findWhere( criteria=args );
             if( !isNull( setting ) ){
                 SettingService.delete( setting );

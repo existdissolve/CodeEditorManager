@@ -31,7 +31,7 @@
                     <cfset counter = 1>
                     <cfloop array="#prc.Ace.themes#" index="theme">
                         <td>
-                            <input type="checkbox" name="AceThemes" value="#theme.theme#" <cfif arrayFindNoCase( prc.Ace.allowedThemes, theme.theme ) OR NOT arrayLen( prc.Ace.allowedThemes )>checked="checked"</cfif> /> #theme.name#
+                            <input type="checkbox" name="AceThemes" value="#theme.theme#" <cfif arrayFindNoCase( prc.Ace.allowedThemes, theme.theme )>checked="checked"</cfif> /> #theme.name#
                         </td>
                         <cfif counter MOD 6 eq 0>
                             </tr>
@@ -67,7 +67,7 @@
                     <cfset counter = 1>
                     <cfloop array="#prc.Ace.modes#" index="mode">
                         <td>
-                            <input type="checkbox" name="AceModes" value="#mode.mode#" <cfif arrayFindNoCase( prc.Ace.allowedModes, mode.mode ) OR NOT arrayLen( prc.Ace.allowedModes )>checked="checked"</cfif> /> #mode.name#
+                            <input type="checkbox" name="AceModes" value="#mode.mode#" <cfif arrayFindNoCase( prc.Ace.allowedModes, mode.mode )>checked="checked"</cfif> /> #mode.name#
                         </td>
                         <cfif counter MOD 6 eq 0>
                             </tr>

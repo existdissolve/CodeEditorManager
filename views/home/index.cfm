@@ -8,7 +8,7 @@
             <!--- Body Header --->
             <div class="header">
                 <i class="icon-wrench icon-large"></i>
-                Custom Code Editor Settings
+                Code Editor Manager Settings
             </div>
             <!--- Body --->
             <div class="body">

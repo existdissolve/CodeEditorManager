@@ -31,7 +31,7 @@
                     <cfset counter = 1>
                     <cfloop array="#prc.CodeMirror.themes#" index="theme">
                         <td>
-                            <input type="checkbox" name="CodeMirrorThemes" value="#theme.theme#" <cfif arrayFindNoCase( prc.CodeMirror.allowedThemes, theme.theme ) OR NOT arrayLen( prc.CodeMirror.allowedThemes )>checked="checked"</cfif> /> #theme.name#
+                            <input type="checkbox" name="CodeMirrorThemes" value="#theme.theme#" <cfif arrayFindNoCase( prc.CodeMirror.allowedThemes, theme.theme )>checked="checked"</cfif> /> #theme.name#
                         </td>
                         <cfif counter MOD 6 eq 0>
                             </tr>
@@ -67,7 +67,7 @@
                     <cfset counter = 1>
                     <cfloop array="#prc.CodeMirror.modes#" index="mode">
                         <td>
-                            <input type="checkbox" name="CodeMirrorModes" value="#mode.mode#" <cfif arrayFindNoCase( prc.CodeMirror.allowedModes, mode.mode ) OR NOT arrayLen( prc.CodeMirror.allowedModes )>checked="checked"</cfif> /> #mode.name#
+                            <input type="checkbox" name="CodeMirrorModes" value="#mode.mode#" <cfif arrayFindNoCase( prc.CodeMirror.allowedModes, mode.mode )>checked="checked"</cfif> /> #mode.name#
                         </td>
                         <cfif counter MOD 6 eq 0>
                             </tr>
