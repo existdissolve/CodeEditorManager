@@ -1,0 +1,6 @@
+.codemirror-toolbar {margin-bottom: 0px;padding-bottom: 0px;}
+.codemirror-toolbar select {margin-right:10px;}
+.codemirror-toolbar .control-label {display: inline-block !important;margin-right:10px;margin-top:-4px;}
+.codemirror-area {position:relative;top:0;right:0;bottom:0;left:0;}
+.codemirror-area.full {height:510px;}
+.codemirror-area.excerpt{height:250px;}

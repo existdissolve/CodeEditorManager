@@ -70,11 +70,11 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
         savecontent variable="modes" {
             var modeCombo = "<label class='control-label' for=Mode>Language:</label>";
             modeCombo &= "<select name='Mode'>";
-            var modes = CodeEditorService.getCustomPopulatedModes();
+            var modes = CodeEditorService.getCustomModes( "ace" );
             for( var mode in modes ) {
                 if( CodeEditorService.getCodeEditorSetting( "defaultMode", "ace" ) == mode.mode ) {
                     modeCombo &= "<option selected=true value='ace/mode/#mode.mode#'>#mode.name#</option>";
-                    defaultMode = mode.mode;
+                    defaultMode = "ace/mode/#mode.mode#";
                 }
                 else {
                     modeCombo &= "<option value='ace/mode/#mode.mode#'>#mode.name#</option>";
@@ -85,14 +85,14 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
         savecontent variable="themes" {
             var themeCombo = "<label class='control-label' for=Theme>Theme:</label>";
             themeCombo &= "<select name='Theme'>";
-            var themes = CodeEditorService.getCustomPopulatedThemes();
+            var themes = CodeEditorService.getCustomThemes( "ace" );
             for( var theme in themes ) {
-                if( CodeEditorService.getCodeEditorSetting( "defaultTheme", "ace" ) == replaceNoCase( theme.path, "ace/theme/", "" ) ) {
-                    themeCombo &= "<option selected=true value='#theme.path#'>#theme.name#</option>";
-                    defaultTheme = theme.path;
+                if( CodeEditorService.getCodeEditorSetting( "defaultTheme", "ace" ) == theme.theme ) {
+                    themeCombo &= "<option selected=true value='ace/theme/#theme.theme#'>#theme.name#</option>";
+                    defaultTheme = "ace/theme/#theme.theme#";
                 }
                 else {
-                    themeCombo &= "<option value='#theme.path#'>#theme.name#</option>";
+                    themeCombo &= "<option value='ace/theme/#theme.theme#'>#theme.name#</option>";
                 }                
             }
             writeoutput( themeCombo );
@@ -118,6 +118,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
                     editor.getSession().on('change', function(e) {
                         $content.val( editor.getSession().getValue() );
                     });
+                    editor.setShowPrintMargin( false );
 
                 var modeCombo = $( ""#modes#"" );
                 toolbar.append( modeCombo );

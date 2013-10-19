@@ -1,4 +1,4 @@
-component {
+component accessors="true" singleton {
     property name="settings" inject="coldbox:moduleSettings:CodeEditor";
     property name="settingService" inject="settingService@cb";
 
@@ -41,12 +41,13 @@ component {
 
     /**
      * Get populated, user-defined modes
+     * @editor {String} the name of the editor for which the custom modes are being retrieved
      * return Array
      */
-    public Array function getCustomPopulatedModes() {
+    public Array function getCustomModes( required String editor ) {
         var populatedModes = [];
-        var customModeList = getCodeEditorSetting( "modes", "ace" );
-        for( var mode in settings.ace.modes ) {
+        var customModeList = getCodeEditorSetting( "modes", arguments.editor );
+        for( var mode in settings[ arguments.editor ].modes ) {
             if( arrayFindNoCase( customModeList, mode.mode ) ) {
                 arrayAppend( populatedModes, mode );
             }
@@ -56,12 +57,13 @@ component {
 
     /**
      * Get populated, user-defined themes
+     * @editor {String} the name of the editor for which the custom themes are being retrieved
      * return Array
      */
-    public Array function getCustomPopulatedThemes() {
+    public Array function getCustomThemes( required String editor ) {
         var populatedThemes = [];
-        var customThemeList = getCodeEditorSetting( "themes", "ace" );
-        for( var theme in settings.ace.themes ) {
+        var customThemeList = getCodeEditorSetting( "themes", arguments.editor );
+        for( var theme in settings[ arguments.editor ].themes ) {
             if( arrayFindNoCase( customThemeList, theme.theme ) ) {
                 arrayAppend( populatedThemes, theme );
             }
