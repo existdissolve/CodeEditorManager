@@ -22,7 +22,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component hint="Module Configuration for Custom Code Editor" {
+component hint="Module Configuration for Code Editor Manager" {
     /**
         Module Directives as public properties
         this.title              = "Title of the module";
@@ -66,7 +66,7 @@ component hint="Module Configuration for Custom Code Editor" {
     */
 
     // Module Properties
-    this.title              = "Custom Code Editor Manager";
+    this.title              = "Code Editor Manager";
     this.author             = "Joel Watson";
     this.webURL             = "http://existdissolve.com";
     this.description        = "A simple module to enable use of multiple custom code editors for pages and entries";
@@ -136,7 +136,7 @@ component hint="Module Configuration for Custom Code Editor" {
         menuService.addSubMenu( 
             topMenu=menuService.MODULES, 
             name="CodeEditor", 
-            label="Custom Code Editor Manager", 
+            label="Code Editor Manager", 
             href="#menuService.buildModuleLink('CodeEditor','home')#" 
         );
     }
