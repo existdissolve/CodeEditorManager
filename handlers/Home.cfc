@@ -1,16 +1,11 @@
 component displayName="Home" {
+    property name="settings" inject="coldbox:moduleSettings:CodeEditor";
     property name="settingService" inject="settingService@cb";
     property name="cb" inject="cbHelper@cb";
     property name="EditorService" inject="EditorService@cb";
-    property name="AceEditor" inject="AceEditor@CodeEditor";
-    property name="CodeMirrorEditor" inject="CodeMirrorEditor@CodeEditor";
 
-    function index( required any event, required struct rc, required struct prc){
-        // get custom settings
-        var editors = [ 
-            { name="ace", editor=AceEditor }, 
-            { name="codemirror", editor=CodeMirrorEditor }
-        ];
+    public Void function index( required Any event, required Struct rc, required Struct prc ) {
+        var editors = getConfiguredEditors();
         // loop over editors and build prc
         for( var config in editors ) {
             var name = config.name;
@@ -30,11 +25,8 @@ component displayName="Home" {
         event.setView( "home/index" );
     }
 
-    function saveSettings( required any event, required struct rc, required struct prc ) {
-        var editors = [ 
-            { name="ace", editor=AceEditor }, 
-            { name="codemirror", editor=CodeMirrorEditor }
-        ];
+    public Void function saveSettings( required Any event, required Struct rc, required Struct prc ) {
+        var editors = getConfiguredEditors();
         for( var config in editors ) {
             var name = config.name;
             var editor = config.editor;
@@ -82,5 +74,21 @@ component displayName="Home" {
         // Messagebox
         getPlugin("MessageBox").info("Settings Saved & Updated!");
         cb.setNextModuleEvent( "CodeEditor", "home.index" );
+    }
+
+    /**
+     * Gets collection of all configured editors for this module
+     * return Array
+     */
+    private Array function getConfiguredEditors() {
+        var editors = [];
+        for( var key in settings.configuredEditors ) {
+            var editor = settings.configuredEditors[ key ];
+            arrayAppend( editors, {
+                name = key,
+                editor = controller.getWireBox().getInstance( editor.instancePath )
+            });
+        }
+        return editors;
     }
 }

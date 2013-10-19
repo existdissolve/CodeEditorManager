@@ -31,7 +31,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
     property name="SettingService" inject="SettingService@cb";
 
     settings = {
-        "active" = true,
+        "active" = false,
         "defaultMode" = "htmlmixed",
         "modes" = [
             { name="APL", mime="text/apl", mode="apl", type="apl" },
